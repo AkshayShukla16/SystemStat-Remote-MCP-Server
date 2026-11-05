@@ -8,6 +8,8 @@ dependencies = [
     "fastmcp>=4.1.6",
     "psutil>=7.2.2",
 ]
+[tool.uv]
+package = false
 
 [project.scripts]
 remote-server = "remote_server:main"
