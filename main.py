@@ -1,11 +1,11 @@
 from fastmcp import FastMCP
 import psutil
+import asyncio
 
 
 mcp = FastMCP(name="SystemStats")
 
-@mcp.tool()
-def get_system_stats():
+def fetch_system_stats():
     """
     Get system statistics including CPU usage, memory usage, and disk usage.
     """
@@ -23,5 +23,14 @@ def get_system_stats():
         "disk_free": disk_info.free
     }
 
+
+@mcp.tool()
+async def get_system_stats():
+    """
+    Tool to fetch system statistics.
+    """
+    stats = await asyncio.to_thread(fetch_system_stats)
+    return stats
+
 if __name__ == "__main__":
-    mcp.run(transport="http", host="0.0.0.0", port="8000")
+    mcp.run(transport="http", host="0.0.0.0", port=8000)
